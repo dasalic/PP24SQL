@@ -16,13 +16,15 @@ create table kupac(
 );
 create table kosarica(
     sifra int not null primary key auto_increment,
-    cijena int,
+    cijena decimal(18,2),
+    kolicina int,
     brojnarudzbe decimal(18,2),
     proizvod varchar(50) not null
 );
 create table narudzba(
     sifra int not null primary key auto_increment,
     brojnarudzbe decimal(18,2) not null,
+    kupac varchar(50),
     dostavnasluzba varchar(50) not null,
     vrstaplacanja varchar(50) not null,
     brojproizvoda int not null,
@@ -37,6 +39,7 @@ create table proizvod(
     brojproizvoda int not null
     );
 
-alter table kupac add foreign key (brojkupca) references kosarica(sifra);
-alter table kosarica add foreign key (cijena) references narudzba(sifra);
+alter table kupac add foreign key (brojkupca) references narudzba(sifra);
 alter table narudzba add foreign key (brojproizvoda) references proizvod(sifra);
+alter table proizvod add foreign key (brojproizvoda) references  kosarica(sifra);
+alter table narudzba add foreign key (brojproizvoda) references kosarica(sifra);
